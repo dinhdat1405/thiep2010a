@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiệp 20/10 chúc Chi thối ❤️</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #a1c4fd 100%);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Họa tiết hoa trang trí cố định góc */
+        .decor-flower {
+            position: absolute;
+            font-size: 35px;
+            z-index: 1;
+            user-select: none;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
+            animation: pulse 2s infinite alternate;
+        }
+        .top-left { top: 15px; left: 15px; }
+        .top-right { top: 15px; right: 15px; }
+        .bottom-left { bottom: 15px; left: 15px; }
+        .bottom-right { bottom: 15px; right: 15px; }
+
+        @keyframes pulse {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.15) rotate(10deg); }
+        }
+
+        /* Khung thiệp */
+        .card {
+            background: rgba(255, 255, 255, 0.93);
+            padding: 30px 25px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+            text-align: center;
+            max-width: 380px;
+            width: 88%;
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Header tiêu đề */
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        h2 {
+            color: #ff3366;
+            margin: 0;
+            font-size: 22px;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* Khung hiển thị nội dung gõ chữ */
+        .text-box {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.7;
+            min-height: 140px;
+            text-align: left;
+            white-space: pre-line;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        /* Nút bấm mở thiệp */
+        .btn {
+            background: linear-gradient(45deg, #ff4b6e, #ff758c);
+            color: white;
+            border: none;
+            padding: 13px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 75, 110, 0.4);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 75, 110, 0.6);
+        }
+
+        /* Hiệu ứng hoa & tim bay nhẹ nhàng */
+        .falling-item {
+            position: absolute;
+            top: -50px;
+            z-index: 2;
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(105vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hoa trang trí 4 góc -->
+    <div class="decor-flower top-left">🌸🌺</div>
+    <div class="decor-flower top-right">🌼🌸</div>
+    <div class="decor-flower bottom-left">🌿🌷</div>
+    <div class="decor-flower bottom-right">🌸✨</div>
+
+    <!-- Khung nội dung chính -->
+    <div class="card">
+        <div class="card-header">
+            <span>🌸</span>
+            <h2>Thiệp 20/10 chúc Chi thối</h2>
+            <span>💖</span>
+        </div>
+        <button class="btn" id="startBtn" onclick="openCard()">Mở thiệp & Nhạc ✨</button>
+        <div class="text-box" id="typingText"></div>
+    </div>
+
+    <!-- Nhạc nền -->
+    <audio id="bgMusic" src="music.mp3" preload="auto"></audio>
+
+    <script>
+        // Nội dung lời chúc dành cho Chi thối
+        const message = "Chúc Chi có một ngày 20/10 thật vui vẻ và ý nghĩa nhé.\n\nChúc m luôn bình an, thật nhiều sức khoẻ, luôn tự tin chiến thắng, dù có khó khăn ra sao thì cũng mạnh mẽ vượt qua m nhé!\n\nI luv u ❤️";
+        
+        let index = 0;
+
+        function openCard() {
+            // Phát nhạc
+            const music = document.getElementById('bgMusic');
+            music.play();
+
+            // Ẩn nút mở thiệp
+            document.getElementById('startBtn').style.display = 'none';
+
+            // Chạy hiệu ứng gõ chữ
+            typeWriter();
+
+            // Tạo hoa & trái tim rơi lơ lửng
+            setInterval(createFallingItem, 250);
+        }
+
+        function typeWriter() {
+            if (index < message.length) {
+                document.getElementById("typingText").innerHTML += message.charAt(index);
+                index++;
+                setTimeout(typeWriter, 55); // Tốc độ đánh máy (55ms/chữ)
+            }
+        }
+
+        function createFallingItem() {
+            const items = ['❤️', '🌸', '💖', '🌺', '✨', '💕', '🌼'];
+            let item = document.createElement('div');
+            item.classList.add('falling-item');
+            
+            // Lựa chọn ngẫu nhiên biểu tượng
+            item.innerHTML = items[Math.floor(Math.random() * items.length)];
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.fontSize = (Math.random() * 12 + 18) + 'px'; // Kích thước ngẫu nhiên
+            item.style.animationDuration = (Math.random() * 3 + 3) + 's'; // Tốc độ rơi
+
+            document.body.appendChild(item);
+
+            // Tự xóa sau khi rơi xong để tránh nặng trang
+            setTimeout(() => {
+                item.remove();
+            }, 6000);
+        }
+    </script>
+</body>
+</html>
